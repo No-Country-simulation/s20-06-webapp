@@ -24,13 +24,13 @@ function Login() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="flex w-96 flex-col gap-2 rounded-md border p-6"
+                className="flex w-96 flex-col gap-2 rounded-md border p-6 shadow-lg"
             >
-                <div className='text-center'>
+                <div className='text-4xl font-bold text-center mb-5 text-gray-600'>
                     <h2>Inicia sesión</h2>
                 </div>
 
-                <label className="text-sm" htmlFor="email">*Email</label>
+                <label className="text-sm text-gray-600" htmlFor="email">*Email</label>
 
                 <input
                     type="email"
@@ -52,7 +52,7 @@ function Login() {
 
                 <div className='flex justify-between'>
 
-                    <label className='w-fit text-sm' htmlFor="password">*Contraseña</label>
+                    <label className='w-fit text-sm text-gray-600' htmlFor="password">*Contraseña</label>
 
                     <span className="w-fit text-sm underline cursor-pointer border-black">
                         ¿Olvidaste tu contraseña?
