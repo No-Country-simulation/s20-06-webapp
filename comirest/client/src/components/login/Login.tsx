@@ -1,4 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { FaInstagram } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 
 
 function Login() {
@@ -23,13 +26,12 @@ function Login() {
         <div>
 
             <div className="flex flex-col justify-center items-center min-h-screen bg-comiWhite">
-                <div className='text-center'>
-                    LOGO COMIREST
-                </div>
+
+                <img src='./COMIRESTLOGO.png' className='max-w-56 -my-14 -mt-24'></img>
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="h-[34.4] flex w-full max-w-md flex-col items-center gap-3 rounded-md border p-12 shadow-2xl bg-white"
+                    className="h-[34.4] flex w-full max-w-md flex-col items-center gap-3 rounded-md border p-12 pt-8 shadow-2xl bg-white"
                 >
                     <div className='mb-10 text-4xl font-poppins font-bold text-center text-textColor'>
                         <h2>Inicia sesión</h2>
@@ -42,7 +44,7 @@ function Login() {
                         className={`font-poppins mb-4 px-1 h-10 w-96 rounded-md border border-comiRed outline-none ${errors.email && 'border-red-500'}`}
                         id="email"
                         {...register('email', {
-                            required: 'Requiere emal',
+                            required: 'Requiere email',
                             pattern: {
                                 value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
                                 message: 'Email invalido',
@@ -50,7 +52,7 @@ function Login() {
                         })}
                     />
                     {errors.email && (
-                        <span className="-mt-5 text-sm text-red-500">
+                        <span className="-mt-6 text-sm text-red-500">
                             {errors.email.message}
                         </span>
                     )}
@@ -78,7 +80,7 @@ function Login() {
                         })}
                     />
                     {errors.password && (
-                        <span className="-mt-5 text-sm text-red-500">
+                        <span className="-mt-6 text-sm text-red-500">
                             {errors.password.message}
                         </span>
                     )}
@@ -93,11 +95,21 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="font-poppins h-10 w-80 rounded-md text-textColor border border-comiRed font-normal"
+                        className="flex items-center justify-center gap-2 text-base font-poppins h-10 w-80 rounded-md text-textColor border border-comiRed font-normal"
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? 'Iniciando sesión...' : 'Inicia sesión con Google'}
+                        {isSubmitting ? (
+                            'Iniciando sesión...'
+                        ) : (
+                            <>
+                                <FaGoogle
+                                    color='#E71B1E'
+                                    size={14} />
+                                <span>Inicia sesión con Google</span>
+                            </>
+                        )}
                     </button>
+
 
 
                     <div className='my-5 text-center'>
@@ -116,14 +128,18 @@ function Login() {
 
                 <div className='flex justify-between'>
 
-                    <div>
-                        PASTA NONNA
 
-                    </div>
+                    <img src='./COMIRESTLOGO.png' className='flex justify-center items-center max-w-56 ml-10'></img>
 
-                    <div>
+                    <div className='flex justify-center items-center gap-4 m-14'>
 
-                        Facebook Ig
+                        <FaFacebook
+                            color='#E71B1E'
+                            size={25} />
+                        <FaInstagram
+                            color='#E71B1E'
+                            size={25} />
+
                     </div>
 
                     <form className='m-14 font-inter'>
