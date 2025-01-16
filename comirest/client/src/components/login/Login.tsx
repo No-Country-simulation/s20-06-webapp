@@ -21,20 +21,24 @@ function Login() {
     return (
         <div>
 
-            <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className=" mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+                <div className='text-center m-12'>
+                    LOGO COMIREST
+                </div>
+
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="flex w-96 flex-col gap-2 rounded-md border p-6 shadow-lg"
+                    className="h-4/6 flex w-96 flex-col gap-2 rounded-md border p-6 shadow-2xl"
                 >
-                    <div className='text-4xl font-bold text-center mb-5 text-gray-600'>
+                    <div className='text-4xl font-bold text-center my-4 text-textColor'>
                         <h2>Inicia sesión</h2>
                     </div>
 
-                    <label className="text-sm text-gray-600" htmlFor="email">*Email</label>
+                    <label className="text-sm text-textColor" htmlFor="email">*Email</label>
 
                     <input
                         type="email"
-                        className={`mb-4 h-10 w-80 rounded-md border outline-none ${errors.email && 'border-red-500'}`}
+                        className={`mb-4 h-10 w-80 rounded-md border border-comiRed outline-none ${errors.email && 'border-red-500'}`}
                         id="email"
                         {...register('email', {
                             required: 'Requiere emal',
@@ -50,11 +54,11 @@ function Login() {
                         </span>
                     )}
 
-                    <div className='flex justify-between'>
+                    <div className='flex justify-between w-80'>
 
-                        <label className='w-fit text-sm text-gray-600' htmlFor="password">*Contraseña</label>
+                        <label className='w-fit text-sm text-textColor' htmlFor="password">*Contraseña</label>
 
-                        <span className="w-fit text-sm underline cursor-pointer border-black">
+                        <span className="w-fit text-sm cursor-pointer border-black">
                             ¿Olvidaste tu contraseña?
                         </span>
 
@@ -62,7 +66,7 @@ function Login() {
 
                     <input
                         type="password"
-                        className={`mb-4 h-10 w-80 rounded-md border outline-none ${errors.email && 'border-red-500'}`}
+                        className={`mb-4 h-10 w-80 rounded-md border border-comiRed outline-none ${errors.email && 'border-red-500'}`}
                         id="password"
                         {...register('password', {
                             required: 'Requiere contraseña',
@@ -80,7 +84,7 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="h-10 w-64 mx-auto rounded-md bg-gray-600 text-white"
+                        className="h-10 w-64 mx-auto rounded-md bg-comiRed text-comiWhite font-bold"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Iniciando sesión...' : 'Inicia sesión'}
@@ -88,17 +92,17 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="h-10 w-64 mx-auto rounded-md text-gray-600 border border-gray-600"
+                        className="h-10 w-64 mx-auto rounded-md text-textColor border border-comiRed font-normal"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Iniciando sesión...' : 'Inicia sesión con Google'}
                     </button>
 
 
-                    <div className='mt-3 text-center'>
-                        <p className="text-sm text-gray-500">
+                    <div className='my-5 text-center'>
+                        <p className="text-sm text-textColor">
                             No tenés tu cuenta?{' '}
-                            <span className="font-semibold underline cursor-pointer border-black">
+                            <span className="text-comiRed font-semibold underline cursor-pointer border-black">
                                 Registrate
                             </span>
                         </p>
