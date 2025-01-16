@@ -21,24 +21,24 @@ function Login() {
     return (
         <div>
 
-            <div className=" mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
-                <div className='text-center m-12'>
+            <div className="flex flex-col justify-center items-center min-h-screen bg-comiWhite">
+                <div className='text-center'>
                     LOGO COMIREST
                 </div>
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="h-4/6 flex w-96 flex-col gap-2 rounded-md border p-6 shadow-2xl"
+                    className="h-[34.4] flex w-full max-w-md flex-col items-center gap-3 rounded-md border p-12 shadow-2xl bg-white"
                 >
-                    <div className='text-4xl font-bold text-center my-4 text-textColor'>
+                    <div className='mb-10 text-4xl font-bold text-center text-textColor'>
                         <h2>Inicia sesión</h2>
                     </div>
 
-                    <label className="text-sm text-textColor" htmlFor="email">*Email</label>
+                    <label className="text-sm w-96 text-textColor" htmlFor="email">*Email</label>
 
                     <input
                         type="email"
-                        className={`mb-4 h-10 w-80 rounded-md border border-comiRed outline-none ${errors.email && 'border-red-500'}`}
+                        className={`mb-4 h-10 w-96 rounded-md border border-comiRed outline-none ${errors.email && 'border-red-500'}`}
                         id="email"
                         {...register('email', {
                             required: 'Requiere emal',
@@ -54,7 +54,7 @@ function Login() {
                         </span>
                     )}
 
-                    <div className='flex justify-between w-80'>
+                    <div className='flex justify-between w-96'>
 
                         <label className='w-fit text-sm text-textColor' htmlFor="password">*Contraseña</label>
 
@@ -66,7 +66,7 @@ function Login() {
 
                     <input
                         type="password"
-                        className={`mb-4 h-10 w-80 rounded-md border border-comiRed outline-none ${errors.email && 'border-red-500'}`}
+                        className={`mb-4 h-10 w-96 px-1 rounded-md border border-comiRed outline-none ${errors.email && 'border-red-500'}`}
                         id="password"
                         {...register('password', {
                             required: 'Requiere contraseña',
@@ -84,7 +84,7 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="h-10 w-64 mx-auto rounded-md bg-comiRed text-comiWhite font-bold"
+                        className="h-10 w-80 rounded-md bg-comiRed text-comiWhite font-bold"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Iniciando sesión...' : 'Inicia sesión'}
@@ -92,7 +92,7 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="h-10 w-64 mx-auto rounded-md text-textColor border border-comiRed font-normal"
+                        className="h-10 w-80 rounded-md text-textColor border border-comiRed font-normal"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Iniciando sesión...' : 'Inicia sesión con Google'}
@@ -111,7 +111,7 @@ function Login() {
                 </form>
             </div>
 
-            <div className='h-44 mt-5 bg-[#242424] text-white'>
+            <div className='h-44 bg-[#242424] text-white'>
 
                 <div className='flex justify-between'>
 
