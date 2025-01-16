@@ -6,6 +6,7 @@ function Login() {
     type Inputs = {
         email: string;
         password: string;
+        subscribeEmail: string;
     };
 
     const {
@@ -30,15 +31,15 @@ function Login() {
                     onSubmit={handleSubmit(onSubmit)}
                     className="h-[34.4] flex w-full max-w-md flex-col items-center gap-3 rounded-md border p-12 shadow-2xl bg-white"
                 >
-                    <div className='mb-10 text-4xl font-bold text-center text-textColor'>
+                    <div className='mb-10 text-4xl font-poppins font-bold text-center text-textColor'>
                         <h2>Inicia sesión</h2>
                     </div>
 
-                    <label className="text-sm w-96 text-textColor" htmlFor="email">*Email</label>
+                    <label className="text-sm w-96 font-poppins text-textColor" htmlFor="email">*Email</label>
 
                     <input
                         type="email"
-                        className={`mb-4 h-10 w-96 rounded-md border border-comiRed outline-none ${errors.email && 'border-red-500'}`}
+                        className={`font-poppins mb-4 px-1 h-10 w-96 rounded-md border border-comiRed outline-none ${errors.email && 'border-red-500'}`}
                         id="email"
                         {...register('email', {
                             required: 'Requiere emal',
@@ -56,9 +57,9 @@ function Login() {
 
                     <div className='flex justify-between w-96'>
 
-                        <label className='w-fit text-sm text-textColor' htmlFor="password">*Contraseña</label>
+                        <label className='font-poppins w-fit text-sm text-textColor' htmlFor="password">*Contraseña</label>
 
-                        <span className="w-fit text-sm cursor-pointer border-black">
+                        <span className="font-poppins w-fit text-sm cursor-pointer border-black">
                             ¿Olvidaste tu contraseña?
                         </span>
 
@@ -84,7 +85,7 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="h-10 w-80 rounded-md bg-comiRed text-comiWhite font-bold"
+                        className="font-poppins h-10 w-80 rounded-md bg-comiRed text-comiWhite font-bold"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Iniciando sesión...' : 'Inicia sesión'}
@@ -92,7 +93,7 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="h-10 w-80 rounded-md text-textColor border border-comiRed font-normal"
+                        className="font-poppins h-10 w-80 rounded-md text-textColor border border-comiRed font-normal"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Iniciando sesión...' : 'Inicia sesión con Google'}
@@ -100,9 +101,9 @@ function Login() {
 
 
                     <div className='my-5 text-center'>
-                        <p className="text-sm text-textColor">
+                        <p className="font-poppins text-sm text-textColor">
                             No tenés tu cuenta?{' '}
-                            <span className="text-comiRed font-semibold underline cursor-pointer border-black">
+                            <span className="font-poppins text-comiRed font-semibold underline cursor-pointer border-black">
                                 Registrate
                             </span>
                         </p>
@@ -111,18 +112,48 @@ function Login() {
                 </form>
             </div>
 
-            <div className='h-44 bg-[#242424] text-white'>
+            <div className='flex flex-col flex-grow bg-comiBrown text-white'>
 
                 <div className='flex justify-between'>
 
                     <div>
-                        LOGO
-                        Facebook Ig
+                        PASTA NONNA
+
                     </div>
 
                     <div>
-                        Suscribete a nuestros beneficios
+
+                        Facebook Ig
                     </div>
+
+                    <form className='m-14 font-inter'>
+
+                        <p>
+                            Suscribete a<br /> nuestros beneficios
+                        </p>
+
+                        <input
+                            type="email"
+                            placeholder='Ingrese email'
+                            className={`mb-4 h-10 text-textColor font-inter w-96 px-1 rounded-md outline-none ${errors.email && 'border-red-500'}`}
+                            id="subscribeEmail"
+                            {...register('subscribeEmail', {
+                                required: 'Requiere emal',
+                                pattern: {
+                                    value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                    message: 'Email invalido',
+                                },
+                            })}
+                        />
+                        <button
+                            type="submit"
+                            className="h-7 w-24 text-sm tracking-wider font-inter m-5 rounded-sm text-comiWhite bg-comiRed font-normal"
+                        >
+                            {isSubmitting ? 'Suscrito!' : 'Suscribirse'}
+                        </button>
+                    </form>
+
+
                 </div>
 
             </div>
