@@ -1,9 +1,11 @@
-import Login from "./components/login/login"
+import Login from "./components/login/Login"
+import { FC } from 'react'
+import Home from './pages/Home'
 
-function App() {
+const App: FC = () => {
   return (
-    <div>
-        <Login></Login>
+    <div className="min-h-screen bg-neutral-900">
+      <Home />
     </div>
   )
 }
