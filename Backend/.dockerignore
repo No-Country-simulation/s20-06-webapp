@@ -1,0 +1,13 @@
+# Ignorar los archivos generados por Maven
+target/
+
+# Ignorar los archivos específicos de IDEs
+.idea/
+.vscode/
+
+# Archivos de configuración locales
+*.log
+*.iml
+
+# Archivos de entorno
+.env

@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: laboratorio
+      POSTGRES_DB: comirest
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  app:
+    build: .
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
