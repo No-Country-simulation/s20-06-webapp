@@ -1,24 +1,35 @@
 import { CardsHorizontal } from "../Cards/CardsHorizontal"
 import { CardsVertical } from "../Cards/CardsVertical"
+import Footer from "../footer/Footer"
+import { FaArrowLeft } from "react-icons/fa6";
+import { NavBar } from "../NavBar/NavBar";
 
 function Menu() {
     return (
         <div>
-            <div className='h-12'>{"<===="}</div>
-            <div className='flex justify-center h-28 bg-comiRed'>CARTA IMG</div>
+            <div className='flex items-center h-12 my-auto p-5'>
+                <FaArrowLeft
+                    size={25}
+                    color="#E71B1E"
+                />
+            </div>
 
-            {/* NAVBAR */}
-            <ul className='flex justify-between p-10 mb-5 text-comiRed font-poppins'>
-                <li>PLATOS DEL DIA</li>
-                <li>PASTAS</li>
-                <li>BEBIDAS</li>
-                <li>POSTRES</li>
-                <li>DESAYUNOS</li>
-            </ul>
+            <div className="relative">
+
+                <p className="absolute z-10 inset-0 flex justify-center items-center text-white text-6xl font-inter font-bold">
+                    Carta
+                </p>
+
+                <img className='w-full h-48 object-cover brightness-75' src="./Imagen Carta.jpg" />
+            </div>
+
+
+            <NavBar />
+            
 
             <div className="w-full">
 
-                <div className="flex flex-row justify-center px-28 w-fit mx-auto py-5">
+                <div className="flex flex-row justify-center px-5 w-fit mx-auto py-5">
                     <CardsHorizontal
                         name="RAVIOLI"
                         description=""
@@ -29,7 +40,7 @@ function Menu() {
 
                 <hr className='flex justify-center items-center w-11/12 border-t border-comiRed my-4 mx-auto' />
 
-                <div className='flex w-fit text-right mx-auto font-poppins px-28 py-5 '>
+                <div className='flex w-fit text-right mx-auto font-poppins px-5 py-5 '>
 
                     <CardsHorizontal
                         reverse={true}
@@ -45,6 +56,8 @@ function Menu() {
                 <CardsVertical />
                 <CardsVertical />
             </div>
+
+            <Footer />
 
         </div>
     )
