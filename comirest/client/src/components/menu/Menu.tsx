@@ -1,3 +1,5 @@
+import { CardsHorizontal } from "../Cards/CardsHorizontal"
+import { CardsVertical } from "../Cards/CardsVertical"
 
 function Menu() {
     return (
@@ -14,72 +16,35 @@ function Menu() {
                 <li>DESAYUNOS</li>
             </ul>
 
-           <div className="w-full">
+            <div className="w-full">
 
-                <div className='flex justify-center w-fit font-poppins mx-auto px-32'>
-
-                    <img className='max-w-60' src='./RAVIOLI.jpg' />
-
-                    <div className='px-24 w-fit'>
-                        <h3 className='font-bold text-xl'>RAVIOLI</h3>
-                        <div className='text-base space-y-2 pt-5'>
-                            <p>
-                                Ricota, jamón y mozzarella
-                            </p>
-                            <p>
-                                Con salsa a elección de tomate, blanca o mixta
-                            </p>
-                            <p>
-                                + Gaseosa o Agua saborizada chica a elección
-                            </p>
-                        </div>
-
-
-                        <div className='flex justify-start gap-5 pt-5'>
-                            <p className='font-bold'>$9999</p>
-
-                            <button className='text-comiRed'>Agregar</button>
-                        </div>
-                    </div>
-
+                <div className="flex flex-row justify-center px-28 w-fit mx-auto py-5">
+                    <CardsHorizontal
+                        name="RAVIOLI"
+                        description=""
+                        price={500}
+                        image=""
+                    />
                 </div>
-
 
                 <hr className='flex justify-center items-center w-11/12 border-t border-comiRed my-4 mx-auto' />
 
+                <div className='flex w-fit text-right mx-auto font-poppins px-28 py-5 '>
 
-                <div className='flex w-fit text-right mx-auto font-poppins px-32 flex-row-reverse'>
-
-                    <img className='max-w-60' src='./RAVIOLI.jpg' />
-
-                    <div className='px-24 w-fit'>
-                        <h3 className='font-bold text-xl'>RAVIOLI</h3>
-                        <div className='text-base space-y-2 pt-5'>
-                            <p>
-                                Ricota, jamón y mozzarella
-                            </p>
-                            <p>
-                                Con salsa a elección de tomate, blanca o mixta
-                            </p>
-                            <p>
-                                + Gaseosa o Agua saborizada chica a elección
-                            </p>
-                        </div>
-
-                        <div className='flex justify-end gap-5 pt-5'>
-                            <p className='font-bold'>$9999</p>
-
-                            <button className='text-comiRed'>Agregar</button>
-                        </div>
-                    </div>
+                    <CardsHorizontal
+                        reverse={true}
+                    />
                 </div>
-           </div>
 
-           <hr className='flex justify-center items-center w-11/12 border-t border-comiRed my-4 mx-auto' />
+            </div>
 
-            <div>CARROUSEL</div>
+            <hr className='flex justify-center items-center w-11/12 border-t border-comiRed my-4 mx-auto' />
 
-
+            <div className="grid grid-cols-3 justify-center gap-x-8 gap-y-6 mx-auto p-8">
+                <CardsVertical />
+                <CardsVertical />
+                <CardsVertical />
+            </div>
 
         </div>
     )
