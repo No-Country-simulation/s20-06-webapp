@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react'
 import { UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { AdminSidebar, UserMenu } from './Admin' // Importamos los componentes específicos
+import { AdminSidebar, UserMenu } from './Admin'
 
 interface MenuItem {
   id: number
