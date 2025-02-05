@@ -1,9 +1,12 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaGoogle } from "react-icons/fa";
+import { IoArrowBack } from "react-icons/io5";
 import Footer from '../footer/Footer';
+import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
+    const navigate = useNavigate();
 
     type Inputs = {
         email: string;
@@ -19,10 +22,18 @@ function Login() {
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         console.log('Logged', data);
+        navigate('/admin');
     }
 
     return (
         <div>
+            <button 
+                onClick={() => navigate('/')}
+                className="fixed top-6 left-6 flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors"
+            >
+                <IoArrowBack size={24} />
+                <span className="font-medium">Volver</span>
+            </button>
 
             <div className="flex flex-col justify-center items-center min-h-screen bg-comiWhite">
 

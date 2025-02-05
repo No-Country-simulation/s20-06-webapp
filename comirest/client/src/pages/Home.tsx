@@ -8,16 +8,28 @@ import {
   MapPinIcon,
   ClockIcon 
 } from '@heroicons/react/24/outline'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 import './Home.css'
 import Footer from '../components/footer/Footer'
 import { useNavigate } from 'react-router-dom'
+import { images } from '../assets/images'
+import { MapContainer, TileLayer, Marker as LeafletMarker, Popup } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
+
+// Arreglar el ícono del marcador
+delete (L.Icon.Default.prototype as any)._getIconUrl
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png',
+})
 
 const TopBar: FC = () => {
+  const navigate = useNavigate()
+
   return (
     <div className="topbar">
       <div className="container mx-auto px-4">
@@ -53,7 +65,10 @@ const TopBar: FC = () => {
           </div>
 
           {/* Botón Administrador */}
-          <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded text-sm transition-colors">
+          <button 
+            onClick={() => navigate('/login')}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded text-sm transition-colors"
+          >
             ADMINISTRADOR
           </button>
         </div>
@@ -149,7 +164,7 @@ const Home: FC = () => {
               className="hero-image-container"
             >
               <div className="absolute inset-0 bg-neutral-800">
-                <img src="../src/assets/images/image01.png" alt="" />
+                <img src={images.home.image01} alt="" />
               </div>
             </motion.div>
 
@@ -227,7 +242,7 @@ const Home: FC = () => {
             >
               <div className="about-image">
                 <div className="absolute inset-0 bg-neutral-800">
-                  <img src="../src/assets/images/image02.png" alt="" />
+                  <img src={images.home.image02} alt="" />
                 </div>
               </div>
             </motion.div>
@@ -253,15 +268,15 @@ const Home: FC = () => {
             {[
               { 
                 name: 'Spaghetti alla Carbonara',
-                image: '../src/assets/images/menu01.png'
+                image: images.home.menu01
               },
               { 
                 name: 'Fettuccine Alfredo',
-                image: '../src/assets/images/menu02.png'
+                image: images.home.menu02
               },
               { 
                 name: 'Ravioli di Ricotta',
-                image: '../src/assets/images/menu03.png'
+                image: images.home.menu03
               },
             ].map((item, index) => (
               <motion.div
@@ -304,15 +319,22 @@ const Home: FC = () => {
                 Dónde estamos
               </h2>
               <div className="location-map">
-                <LoadScript googleMapsApiKey="API_KEY">
-                  <GoogleMap
-                    mapContainerClassName="w-full h-full"
-                    center={{ lat: -34.6037, lng: -58.3816 }}
-                    zoom={15}
-                  >
-                    <Marker position={{ lat: -34.6037, lng: -58.3816 }} />
-                  </GoogleMap>
-                </LoadScript>
+                <MapContainer 
+                  center={[-34.6037, -58.3816]} 
+                  zoom={15} 
+                  scrollWheelZoom={false}
+                  style={{ height: '100%', width: '100%', borderRadius: '0.5rem' }}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <LeafletMarker position={[-34.6037, -58.3816]}>
+                    <Popup>
+                      Pasta Nonna <br /> ¡Te esperamos!
+                    </Popup>
+                  </LeafletMarker>
+                </MapContainer>
               </div>
             </motion.div>
 
