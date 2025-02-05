@@ -1,5 +1,6 @@
 package com.comirest.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,7 +22,8 @@ public class History {
     @Column(nullable = false)
     private float total;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt ;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt = LocalDateTime.now();  // Fecha y hora de creación
 
 }
