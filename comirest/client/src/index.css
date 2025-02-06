@@ -11,3 +11,11 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: #FAF3FF;
 }
+
+select option {
+  background-color: white !important;
+}
+
+select option:checked {
+  background-color: rgb(244 176 66 / 0.1) !important;
+}

@@ -3,7 +3,9 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import './Checkout.css'
 import Footer from '../components/footer/Footer'
-import { div } from 'framer-motion/client'
+import payment01 from '../assets/images/payment01.png'
+import payment02 from '../assets/images/payment02.png'
+import payment03 from '../assets/images/payment03.png'
 
 interface CartItem {
   id: number
@@ -12,6 +14,7 @@ interface CartItem {
   price: number
   image: string
   quantity: number
+  nameMenu: string
 }
 
 interface LocationState {
@@ -24,6 +27,8 @@ const Checkout: FC = () => {
   const location = useLocation()
   const [isLoading, setIsLoading] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
+  const [showErrorModal, setShowErrorModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   
   // Redireccionar si no hay estado o items
   if (!location.state || !location.state.cartItems?.length) {
@@ -35,17 +40,86 @@ const Checkout: FC = () => {
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
-  const handlePaymentClick = () => {
-    setIsLoading(true)
-    // Simular el proceso de pago
-    setTimeout(() => {
-      setIsLoading(false)
+  const paymentImages = [payment01, payment02, payment03]
+
+  const handlePayment = async (paymentMethod: string) => {
+    try {
+      console.log('Iniciando proceso de pago...')
+      console.log('Items en el carrito:', cartItems)
+
+      // Procesar cada item del carrito de forma secuencial
+      for (const item of cartItems) {
+        console.log('Procesando item:', item)
+        
+        const url = `https://s20-06-webapp.onrender.com/admin/consumption-history/consume-food?name=${item.title}&quantity=${item.quantity}`
+        
+        console.log('URL de la petición:', url)
+
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'accept': '*/*'
+          }
+        })
+
+        console.log('Respuesta del servidor:', {
+          status: response.status,
+          statusText: response.statusText
+        })
+
+        if (!response.ok) {
+          const errorText = await response.text()
+          console.error('Error detallado:', errorText)
+          throw new Error(`Error al registrar el producto: ${item.title}. Status: ${response.status}`)
+        }
+
+        const responseData = await response.json().catch(e => console.log('No JSON response'))
+        console.log('Datos de respuesta:', responseData)
+      }
+
+      console.log('Todos los productos fueron registrados correctamente')
       setShowConfirmation(true)
-    }, 2000)
+      setTimeout(() => {
+        navigate('/menu')
+      }, 2000)
+
+    } catch (error) {
+      console.error('Error completo:', error)
+      console.error('Stack trace:', (error as Error).stack)
+      setErrorMessage('Error al procesar el pago. Por favor, intente nuevamente.')
+      setShowErrorModal(true)
+    }
   }
 
+  // Modal de Error
+  const ErrorModal: FC<{ message: string }> = ({ message }) => (
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div className="mt-3 text-center">
+          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+            <XMarkIcon className="h-6 w-6 text-red-600" />
+          </div>
+          <h3 className="text-lg leading-6 font-medium text-gray-900">Error</h3>
+          <div className="mt-2 px-7 py-3">
+            <p className="text-sm text-gray-500">
+              {message}
+            </p>
+          </div>
+          <div className="items-center px-4 py-3">
+            <button
+              onClick={() => setShowErrorModal(false)}
+              className="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
   return (
-    <div>
+    <div className="min-h-screen bg-neutral-900">
     <div className="checkout-page">
       <div className="checkout-container">
         {/* Primer contenedor - Título y botón cerrar */}
@@ -116,22 +190,45 @@ const Checkout: FC = () => {
         <div className="payment-section">
           <h2 className="section-title">Métodos de pago</h2>
           <div className="payment-methods">
-            {['Efectivo', 'Tarjeta de crédito', 'Tarjeta de débito'].map((method, index) => (
-              <div 
-                key={method} 
-                className="payment-option"
-                onClick={handlePaymentClick}
-              >
-                <div className="payment-image-container">
-                  <img 
-                    src={`../src/assets/images/payment0${index + 1}.png`}
-                    alt={method}
-                    className="payment-image"
-                  />
-                </div>
-                <p className="payment-description">{method}</p>
+            <div 
+              className="payment-option"
+              onClick={() => handlePayment('efectivo')}
+            >
+              <div className="payment-image-container">
+                <img 
+                  src={payment01}
+                  alt="Efectivo"
+                  className="payment-image"
+                />
               </div>
-            ))}
+              <p className="payment-description">Efectivo</p>
+            </div>
+            <div 
+              className="payment-option"
+              onClick={() => handlePayment('debito')}
+            >
+              <div className="payment-image-container">
+                <img 
+                  src={payment02}
+                  alt="Tarjeta de Débito"
+                  className="payment-image"
+                />
+              </div>
+              <p className="payment-description">Tarjeta de Débito</p>
+            </div>
+            <div 
+              className="payment-option"
+              onClick={() => handlePayment('credito')}
+            >
+              <div className="payment-image-container">
+                <img 
+                  src={payment03}
+                  alt="Tarjeta de Crédito"
+                  className="payment-image"
+                />
+              </div>
+              <p className="payment-description">Tarjeta de Crédito</p>
+            </div>
           </div>
         </div>
       </div>
@@ -163,6 +260,8 @@ const Checkout: FC = () => {
         </div>
       </div>
     )}
+
+    {showErrorModal && <ErrorModal message={errorMessage} />}
 
     <Footer></Footer>
     </div>

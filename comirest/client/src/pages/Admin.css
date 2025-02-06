@@ -1,0 +1,31 @@
+/* Estilos para el sidebar */
+.admin-sidebar {
+  transition: all 0.3s ease;
+}
+
+/* Estilos para los links activos */
+.admin-link.active {
+  background-color: #EF4444;
+  color: white;
+}
+
+/* Estilos para hover en los links */
+.admin-link:hover:not(.active) {
+  background-color: #FEE2E2;
+  color: #EF4444;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .admin-content {
+    margin-left: 0;
+  }
+} 

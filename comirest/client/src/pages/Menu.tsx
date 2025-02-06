@@ -1,8 +1,17 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeftIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import './Menu.css'
 import Footer from '../components/footer/Footer'
+
+interface MenuItem {
+  id: number
+  nameMenu: string
+  description: string
+  price: number
+  category: string
+  imageUrl: string
+}
 
 type TabType = 'platos' | 'pastas' | 'bebidas' | 'postres' | 'desayunos'
 
@@ -24,219 +33,103 @@ interface CartItem extends DishItem {
   quantity: number
 }
 
-const menuData: Record<TabType, CategoryContent> = {
-  platos: {
-    mainDishes: [
-      {
-        id: 1,
-        title: "Spaghetti alla Carbonara",
-        description: "Ricota, jamón y mozzarella. \nCon salsa a elección de tomate, blanca o mixta. \n+ Gaseosa o Agua saborizada chica a elección.",
-        price: 13000,
-        image: "../src/assets/images/platodeldia01.png"
-      }
-    ],
-    secondaryDish: {
-      id: 2,
-      title: "Tortellini",
-      description: "Ricota, jamón y nueces. \nCon salsa a elección de tomate, blanca o mixta. \n+ Gaseosa o Agua saborizada chica a elección.",
-      price: 14000,
-      image: "../src/assets/images/platodeldia02.png"
-    },
-    threeDishes: [
-      {
-        id: 3,
-        title: "Fetuccine al huevo",
-        description: "Con salsa de tomate \n+ Gaseosa o Agua saborizada chica a elección.",
-        price: 11000,
-        image: "../src/assets/images/platodeldia03.png"
-      },
-      {
-        id: 4,
-        title: "Tagliatelle",
-        description: "Con salsa de tomate \n+ Gaseosa o Agua saborizada chica a elección.",
-        price: 11000,
-        image: "../src/assets/images/platodeldia04.png"
-      },
-      {
-        id: 5,
-        title: "Gnocchi",
-        description: "Con salsa de tomate \n+ Gaseosa o Agua saborizada chica a elección.",
-        price: 11000,
-        image: "../src/assets/images/platodeldia05.png"
-      }
-    ]
-  },
-  pastas: {
-    mainDishes: [
-      {
-        id: 6,
-        title: "Ravioles de Verdura",
-        description: "Rellenos de espinaca y ricota. \nCon salsa a elección.",
-        price: 12000,
-        image: "../src/assets/images/pastas01.jpg"
-      }
-    ],
-    secondaryDish: {
-      id: 7,
-      title: "Lasagna Clásica",
-      description: "Capas de pasta con salsa boloñesa y bechamel.",
-      price: 13500,
-      image: "../src/assets/images/pastas02.webp"
-    },
-    threeDishes: [
-      {
-        id: 8,
-        title: "Sorrentinos",
-        description: "Rellenos de jamón y mozzarella.",
-        price: 12500,
-        image: "../src/assets/images/pastas03.jpg"
-      },
-      {
-        id: 9,
-        title: "Canelones",
-        description: "Rellenos de carne y verduras.",
-        price: 12000,
-        image: "../src/assets/images/pastas04.jpg"
-      },
-      {
-        id: 10,
-        title: "Penne Rigate",
-        description: "Con salsa arrabiata picante.",
-        price: 11500,
-        image: "../src/assets/images/pastas05.jpg"
-      }
-    ]
-  },
-  bebidas: {
-    mainDishes: [
-      {
-        id: 11,
-        title: "Vino Malbec",
-        description: "Botella 750ml - Bodega Luigi Bosca",
-        price: 8000,
-        image: "../src/assets/images/bebidas01.jpg"
-      }
-    ],
-    secondaryDish: {
-      id: 12,
-      title: "Cerveza Artesanal",
-      description: "Variedad de estilos - 500ml",
-      price: 1500,
-      image: "../src/assets/images/bebidas02.jpg"
-    },
-    threeDishes: [
-      {
-        id: 13,
-        title: "Agua Mineral",
-        description: "Con/Sin gas - 500ml",
-        price: 800,
-        image: "../src/assets/images/bebidas03.jpg"
-      },
-      {
-        id: 14,
-        title: "Gaseosas",
-        description: "Línea Coca-Cola - 500ml",
-        price: 900,
-        image: "../src/assets/images/bebidas04.jpg"
-      },
-      {
-        id: 15,
-        title: "Limonada",
-        description: "Natural con menta y jengibre",
-        price: 1000,
-        image: "../src/assets/images/bebidas05.webp"
-      }
-    ]
-  },
-  postres: {
-    mainDishes: [
-      {
-        id: 16,
-        title: "Tiramisú",
-        description: "Clásico postre italiano con café y mascarpone",
-        price: 3500,
-        image: "../src/assets/images/postres01.jpg"
-      }
-    ],
-    secondaryDish: {
-      id: 17,
-      title: "Panna Cotta",
-      description: "Con frutos rojos y salsa de caramelo",
-      price: 3000,
-      image: "../src/assets/images/postres02.jpg"
-    },
-    threeDishes: [
-      {
-        id: 18,
-        title: "Gelato",
-        description: "3 bochas de helado artesanal",
-        price: 2500,
-        image: "../src/assets/images/postres03.jpg"
-      },
-      {
-        id: 19,
-        title: "Cannoli",
-        description: "Rellenos de crema pastelera",
-        price: 2800,
-        image: "../src/assets/images/postres04.png"
-      },
-      {
-        id: 20,
-        title: "Profiteroles",
-        description: "Con chocolate caliente",
-        price: 3200,
-        image: "../src/assets/images/postres05.jpg"
-      }
-    ]
-  },
-  desayunos: {
-    mainDishes: [
-      {
-        id: 21,
-        title: "Desayuno Completo",
-        description: "Café, jugo de naranja, tostadas, manteca y mermelada",
-        price: 4500,
-        image: "../src/assets/images/desayunos01.jpg"
-      }
-    ],
-    secondaryDish: {
-      id: 22,
-      title: "Medialunas",
-        description: "6 medialunas recién horneadas",
-        price: 2500,
-        image: "../src/assets/images/desayunos02.jpg"
-    },
-    threeDishes: [
-      {
-        id: 23,
-        title: "Tostado Completo",
-        description: "Jamón y queso con jugo de naranja",
-        price: 3500,
-        image: "../src/assets/images/desayunos03.jpg"
-      },
-      {
-        id: 24,
-        title: "Café con Leche",
-        description: "Con 2 medialunas",
-        price: 2000,
-        image: "../src/assets/images/desayunos04.webp"
-      },
-      {
-        id: 25,
-        title: "Yogur con Granola",
-        description: "Con frutas frescas y miel",
-        price: 2800,
-        image: "../src/assets/images/desayunos05.jpg"
-      }
-    ]
-  }
-}
-
 const Menu: FC = () => {
-  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<TabType>('platos')
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [isCartOpen, setIsCartOpen] = useState(false)
+
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        // Intentar obtener datos del caché
+        const cachedMenu = localStorage.getItem('menuItems')
+        const cachedTimestamp = localStorage.getItem('menuTimestamp')
+        const now = new Date().getTime()
+
+        // Si hay datos en caché y tienen menos de 5 minutos, usarlos
+        if (cachedMenu && cachedTimestamp && (now - Number(cachedTimestamp)) < 300000) {
+          const parsedMenu = JSON.parse(cachedMenu)
+          setMenuItems(parsedMenu)
+          setIsLoading(false)
+          // Hacer la petición en segundo plano
+          fetchLatestData()
+          return
+        }
+
+        // Si no hay caché o expiró, hacer la petición normalmente
+        await fetchLatestData()
+
+      } catch (error) {
+        console.error('Error fetching menu:', error)
+        setError('Error al cargar el menú')
+      }
+    }
+
+    const fetchLatestData = async () => {
+      try {
+        const response = await fetch('https://s20-06-webapp.onrender.com/foods')
+        if (!response.ok) throw new Error('Network response was not ok')
+        const data = await response.json()
+        
+        // Guardar en caché
+        localStorage.setItem('menuItems', JSON.stringify(data))
+        localStorage.setItem('menuTimestamp', new Date().getTime().toString())
+        
+        setMenuItems(data.sort((a: MenuItem, b: MenuItem) => a.id - b.id))
+        setError(null)
+      } catch (error) {
+        console.error('Error fetching menu:', error)
+        setError('Error al cargar el menú')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchMenuItems()
+  }, [])
+
+  const getFilteredItems = (category: string): DishItem[] => {
+    if (error || isLoading) return []
+    
+    return menuItems
+      .filter(item => item.category === category.toUpperCase())
+      .map(item => ({
+        id: item.id,
+        title: item.nameMenu,
+        description: item.description,
+        price: item.price,
+        image: item.imageUrl
+      }))
+  }
+
+  const getCategoryContent = (category: string): CategoryContent => {
+    const items = getFilteredItems(category)
+    const defaultItem = {
+      id: 0,
+      title: isLoading ? 'Cargando...' : error || 'No disponible',
+      description: '',
+      price: 0,
+      image: ''
+    }
+    
+    return {
+      mainDishes: items.length > 0 ? [items[0]] : [defaultItem],
+      secondaryDish: items[1] || defaultItem,
+      threeDishes: items.length > 2 ? items.slice(2) : []
+    }
+  }
+
+  const menuData: Record<TabType, CategoryContent> = {
+    platos: getCategoryContent('PLATODELDIA'),
+    pastas: getCategoryContent('PASTAS'),
+    bebidas: getCategoryContent('BEBIDA'),
+    postres: getCategoryContent('POSTRES'),
+    desayunos: getCategoryContent('DESAYUNO')
+  }
 
   const tabs = [
     { id: 'platos', label: 'Platos del Día' },
